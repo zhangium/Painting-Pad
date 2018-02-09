@@ -16,31 +16,34 @@ from tkinter.filedialog import askopenfilename
 from tkinter.filedialog import asksaveasfilename
 
 #=====================================START============================================
-os.environ['SDL_VIDEO_WINDOW_POS'] = '20,100'
-screen = display.set_mode((1200,800))
+os.environ['SDL_VIDEO_WINDOW_POS'] = '20,20'
+screen = display.set_mode((1200,750)) #600/800 = 3/4
 
 display.set_caption("Painting Pad")
 displayIcon=image.load("displayIcon.png")
 display.set_icon(displayIcon)
 
 bg=image.load("periodicTableBG_crop.png")
+bg=transform.scale(bg,(1300,800)) #transformed
 screen.blit(bg,(-50,-50))
 
 colour_pic = image.load("colourPalette.png")
-colour_pic = transform.scale(colour_pic,(250,160))
-colour_rect = Rect(145,620,250,160)
-screen.blit(colour_pic,(145,620))
+colour_pic = transform.scale(colour_pic,(250,140))
+colour_rect = Rect(140,575,250,140)
+screen.blit(colour_pic,(140,575))
 
-canvas_rect = Rect(145,70,975,495)
+canvas_length = 940
+canvas_height = 475
+canvas_rect = Rect(145,60,canvas_length,canvas_height)
 draw.rect(screen,(255,255,255),canvas_rect)
 canvas = screen.subsurface(canvas_rect)
 
 #=================================LEFT SIDE COLUMN====================================
-pen_b=Rect(10,25,50,70)
+pen_b=Rect(15,20,50,70)
 pen_pic = image.load("pencil.png")
 pen_hover = image.load("pencil_hover.png")
 
-erase_b = Rect(10,105,50,70)
+erase_b = Rect(10,95,50,70)
 eraser_pic = image.load("hydrofluoric.png")
 eraser_pic = transform.scale(eraser_pic,(50,55))
 eraser_hover = image.load("hydrofluoric_hover.png")
@@ -52,23 +55,23 @@ brush_pic = transform.scale(brush_pic,(30,50))
 brush_hover = image.load("brush_hover.png")
 brush_hover = transform.scale(brush_hover,(30,50))
 
-spray_b=Rect(10,265,50,70)
+spray_b=Rect(10,245,50,70)
 spray_pic = image.load("spray.png")
 spray_pic = transform.scale(spray_pic,(30,45))
 spray_hover = image.load("spray_hover.png")
 spray_hover = transform.scale(spray_hover,(30,45))
 
-fill_b = Rect(10,345,50,70)
+fill_b = Rect(10,330,50,70)
 fill_pic = image.load("beaker.png")
 fill_hover = image.load("beaker_hover.png")
 
-text_b = Rect(10,425,50,70)
+text_b = Rect(15,400,50,70)
 text_pic = image.load("text.png")
 text_pic = transform.scale(text_pic,(45,45))
 text_hover = image.load("text_hover.png")
 text_hover = transform.scale(text_hover,(45,45))
 
-dropper_b = Rect(10,500,50,70)
+dropper_b = Rect(20,470,50,70)
 dropper_pic = image.load("eyedropper.png")
 dropper_pic = transform.scale(dropper_pic,(45,45))
 dropper_hover = image.load("eyedropper_hover.png")
@@ -76,58 +79,58 @@ dropper_hover = transform.scale(dropper_hover,(45,45))
 
 #==================================2ND LEFT COLUMN=======================================
 line_b=Rect(75,105,50,80)
-draw.line(screen,(0,0,0),(80,130),(110,170),2)
+draw.line(screen,(0,0,0),(80,120),(110,160),2)
 
-rectangle_b = Rect(75,185,50,80)
-draw.rect(screen,(0,0,0),(85,205,35,45),2)
+rectangle_b = Rect(75,175,50,70)
+draw.rect(screen,(0,0,0),(85,190,35,45),2)
 
-ellipse_b = Rect(75,265,60,70)
-draw.ellipse(screen,(0,0,0),(80,285,50,40),2)
+ellipse_b = Rect(75,245,60,70)
+draw.ellipse(screen,(0,0,0),(80,265,50,40),2)
 
-fillRect_b = Rect(75,345,50,80)
-draw.rect(screen,(0,0,0),(85,355,35,45))
+fillRect_b = Rect(75,315,50,80)
+draw.rect(screen,(0,0,0),(85,335,35,45))
 
-fillElip_b = Rect(75,425,60,70)
-draw.ellipse(screen,(0,0,0),(80,435,50,40))
+fillElip_b = Rect(75,390,60,70)
+draw.ellipse(screen,(0,0,0),(80,400,50,40))
 
 poly_pic = image.load("polygon.png")
 poly_pic = transform.scale(poly_pic,(45,45))
-poly_b = Rect(75,505,70,70)
+poly_b = Rect(75,465,70,70)
 poly_hover = image.load("polygon_hover.png")
 poly_hover = transform.scale(poly_hover,(45,45))
 
 #=============================RIGHT SIDE COLUMN===============================
-undo_b = Rect(1135,25,50,70)
+undo_b = Rect(1100,25,50,70)
 undo_pic = image.load("undo.png")
 undo_pic = transform.scale(undo_pic,(30,40))
 undo_hover = image.load("undo_hover.png")
 undo_hover = transform.scale(undo_hover,(30,40))
 
-redo_b = Rect(1135,105,50,70)
+redo_b = Rect(1100,105,50,70)
 redo_pic = image.load("undo.png")
 redo_pic = transform.scale(redo_pic,(30,40))
 redo_pic = transform.flip(redo_pic,True,False)
 redo_hover = transform.flip(undo_hover,True,False)
 
-open_b = Rect(1135,185,50,70)
+open_b = Rect(1100,170,50,70)
 open_pic = image.load("file.png")
 open_pic = transform.scale(open_pic,(40,50))
 open_hover = image.load("file_hover.png")
 open_hover = transform.scale(open_hover,(40,50))
 
-save_b = Rect(1135,340,50,70)
-save_pic = image.load("save.png")
-save_pic = transform.scale(save_pic,(40,50))
-save_hover = image.load("save_hover.png")
-save_hover = transform.scale(save_hover,(40,50))
-
-new_b = Rect(1125,260,50,70)
+new_b = Rect(1090,240,50,70)
 new_pic = image.load("new.png")
 new_pic = transform.scale(new_pic,(55,55))
 new_hover = image.load("new_hover.png")
 new_hover = transform.scale(new_hover,(55,55))
 
-help_b = Rect(1125,420,50,70)
+save_b = Rect(1100,320,50,70)
+save_pic = image.load("save.png")
+save_pic = transform.scale(save_pic,(40,40))
+save_hover = image.load("save_hover.png")
+save_hover = transform.scale(save_hover,(40,40))
+
+help_b = Rect(1090,390,50,70)
 help_pic = image.load("help.png")
 help_pic = transform.scale(help_pic,(55,55))
 help_hover = image.load("help_hover.png")
@@ -136,49 +139,49 @@ help_paintPic = image.load("help_paintPic.png")
 
 #============================ON BOTTOM================================
 #STICKERS
-moth_b = Rect(400,620,50,70)
+moth_b = Rect(390,580,50,70)
 moth_pic = image.load("moth.png")
 moth_pic = transform.scale(moth_pic,(55,50))
 moth_hover = image.load("moth_hover.png")
 moth_hover = transform.scale(moth_hover,(55,50))
 
-bear_b = Rect(400,700,50,70)
+bear_b = Rect(390,650,50,70)
 bear_pic = image.load("bear.png")
 bear_pic = transform.scale(bear_pic,(55,50))
 bear_hover = image.load("bear_hover.png")
 bear_hover = transform.scale(bear_hover,(55,50))
 
-heisen_b = Rect(470,620,50,70)
+heisen_b = Rect(440,580,50,70)
 heisen_pic = image.load("heisenberg.png")
 heisen_pic = transform.scale(heisen_pic,(55,65))
 heisen_hover = image.load("heisenberg_hover.png")
 heisen_hover = transform.scale(heisen_hover,(55,65))
 
-rv_b = Rect(470,700,50,70)
+rv_b = Rect(440,650,50,70)
 rv_pic = image.load("rv.png")
 rv_pic = transform.scale(rv_pic,(50,50))
 rv_hover = image.load("rv_hover.png")
 rv_hover = transform.scale(rv_hover,(50,50))
 
-pollos_b = Rect(530,620,50,70)
+pollos_b = Rect(500,580,50,70)
 pollos_pic = image.load("pollos.png")
 pollos_pic = transform.scale(pollos_pic,(55,60))
 pollos_hover = image.load("pollos_hover.png")
 pollos_hover = transform.scale(pollos_hover,(55,60))
 
-a1_b = Rect(530,700,50,70)
+a1_b = Rect(500,660,50,70)
 a1_pic = image.load("a1.png")
 a1_pic = transform.scale(a1_pic,(55,55))
 a1_hover = image.load("a1_hover.png")
 a1_hover = transform.scale(a1_hover,(55,55))
 
-saul_b = Rect(600,620,50,70)
+saul_b = Rect(560,580,50,70)
 saul_pic = image.load("callSaul.png")
 saul_pic = transform.scale(saul_pic,(55,50))
 saul_hover = image.load("callSaul_hover.png")
 saul_hover = transform.scale(saul_hover,(55,50))
 
-cook_b = Rect(600,700,50,70)
+cook_b = Rect(560,650,50,70)
 cook_pic = image.load("wecancook.png")
 cook_pic = transform.scale(cook_pic,(55,55))
 cook_hover = image.load("wecancook_hover.png")
@@ -188,46 +191,46 @@ cook_hover = transform.scale(cook_hover,(55,55))
 norm_pic = image.load('filter.png')
 norm_pic = transform.scale(norm_pic,(40,55))
 
-grayscale_b = Rect(660,620,50,70)
+grayscale_b = Rect(630,590,50,70)
 grayscale_pic = image.load("filter_grayscale.png")
 grayscale_pic = transform.scale(grayscale_pic,(40,55))
 
-neg_b = Rect(660,700,50,70)
+neg_b = Rect(630,660,50,70)
 neg_pic = image.load("filter_negative.png")
 neg_pic = transform.scale(neg_pic,(40,55))
 
-sepia_b = Rect(725,620,50,70)
+sepia_b = Rect(700,590,50,70)
 sepia_pic = image.load("filter_sepia.png")
 sepia_pic = transform.scale(sepia_pic,(40,55))
 
-red_b = Rect(725,700,50,70)
+red_b = Rect(700,660,50,70)
 red_pic = image.load("filter_red.png")
 red_pic = transform.scale(red_pic,(40,55))
 
-green_b = Rect(790,620,50,70)
+green_b = Rect(770,590,50,70)
 green_pic = image.load("filter_green.png")
 green_pic = transform.scale(green_pic,(40,55))
 
-blue_b = Rect(790,700,50,70)
+blue_b = Rect(770,660,50,70)
 blue_pic = image.load("filter_blue.png")
 blue_pic = transform.scale(blue_pic,(40,55))
 
 #SPECIAL TOOLS
-marker_b = Rect(850,620,50,70)
+marker_b = Rect(830,590,50,70)
 marker_pic = image.load("particles.png")
 marker_pic = transform.scale(marker_pic,(40,55))
 marker_hover = image.load("particles_hover.png")
 marker_hover = transform.scale(marker_hover,(40,55))
 
-random_b = Rect(850,700,50,70)
+random_b = Rect(830,660,50,70)
 random_pic = image.load("randomLines.png")
 random_pic = transform.scale(random_pic,(40,55))
 random_hover = image.load("randomLines_hover.png")
 random_hover = transform.scale(random_hover,(40,55))
 
 #CANVASES (6 in total)
-canvas_bList = [Rect(915,620,50,70),Rect(980,620,50,70),Rect(1040,620,50,70),
-              Rect(915,700,50,70),Rect(980,700,50,70),Rect(1040,700,50,70)]
+canvas_bList = [Rect(875,580,50,70),Rect(940,580,50,70),Rect(1000,580,50,70),
+              Rect(875,650,50,70),Rect(940,650,50,70),Rect(1000,650,50,70)]
 cvs = [screen.subsurface(canvas_rect).copy() for i in range(6)]
 numCvs = ["1","2","3","4","5","6"]
 currentCvs = 0  #set index
@@ -262,15 +265,15 @@ def fill(x,y,oldcol,newcol):
             points += [(nx+1,ny),(nx-1,ny),(nx,ny+1),(nx,ny-1)]
 
 def grayscale(canvas):
-    for xp in range(975):
-        for yp in range(495):
+    for xp in range(canvas_length):
+        for yp in range(canvas_height):
             currentCol = canvas.get_at((xp,yp))
             grayCol = (currentCol[0]+currentCol[1]+currentCol[2])//3
             canvas.set_at((xp,yp),(grayCol,grayCol,grayCol))
         
 def negative(canvas):
-    for xp in range(975):
-        for yp in range(495):
+    for xp in range(canvas_length):
+        for yp in range(canvas_height):
             currentCol = canvas.get_at((xp,yp))
             negRed = max(1,255 - currentCol[0])
             negGreen = max(1,255 - currentCol[1])
@@ -278,8 +281,8 @@ def negative(canvas):
             canvas.set_at((xp,yp),(negRed,negGreen,negBlue))
 
 def sepia(canvas):
-    for xp in range(975):
-        for yp in range(495):
+    for xp in range(canvas_length):
+        for yp in range(canvas_height):
             currentCol = canvas.get_at((xp,yp))
             red = currentCol[0]
             green = currentCol[1]
@@ -290,22 +293,22 @@ def sepia(canvas):
             canvas.set_at((xp,yp), (outputRed,outputGreen,outputBlue))
 
 def red(canvas):
-    for xp in range(975):
+    for xp in range(canvas_length):
         for yp in range(495):
             currentCol = canvas.get_at((xp,yp))
             avg = min(255,((currentCol[0] + currentCol[1] + currentCol[2])//3))
             canvas.set_at((xp,yp), (avg,0,0))
 
 def green(canvas):
-    for xp in range(975):
-        for yp in range(495):
+    for xp in range(canvas_length):
+        for yp in range(canvas_height):
             currentCol = canvas.get_at((xp,yp))
             avg = min(255,((currentCol[0] + currentCol[1] + currentCol[2])//3))
             canvas.set_at((xp,yp), (0,avg,0))
 
 def blue(canvas):
-    for xp in range(975):
-        for yp in range(495):
+    for xp in range(canvas_length):
+        for yp in range(canvas_height):
             currentCol = canvas.get_at((xp,yp))
             avg = min(255,((currentCol[0] + currentCol[1] + currentCol[2])//3))
             canvas.set_at((xp,yp), (0,0,avg))
@@ -436,136 +439,138 @@ while running:
             screen.blit(cvsTxt,(canvas_bList[i][0]+30,canvas_bList[i][1]+30))
         else:
             cvsTxt = times.render(numCvs[i], True, (50,50,50))
+            cvsTxt2 = times.render(numCvs[i], True, (100,100,100))
+            if canvas_bList[i].collidepoint((mx,my)):
+                screen.blit(cvsTxt2,(canvas_bList[i][0]+30,canvas_bList[i][1]+30))
             screen.blit(cvsTxt,(canvas_bList[i][0]+30,canvas_bList[i][1]+30))
 
     if not helpRunning:     #doesn't show when user selects help screen
 
         #SHOWS SELECTED TOOL AND COLOUR
-        draw.rect(screen,(255,255,255),(25,670,90,90))  #covers up
-        draw.circle(screen,col,(70,715),currentSize)
+        draw.rect(screen,(255,255,255),(25,620,90,90))  #covers up
+        draw.circle(screen,col,(70,670),currentSize)
         draw.rect(screen,showcol,colour_rect,2)
 
         #ICONS
-        screen.blit(pen_pic,(15,30))
-        screen.blit(eraser_pic,(10,120))
-        screen.blit(brush_pic,(20,200))
-        screen.blit(spray_pic,(20,280))
-        screen.blit(fill_pic,(15,355))
-        screen.blit(text_pic,(15,435))
-        screen.blit(dropper_pic,(20,510))
-        screen.blit(poly_pic,(85,510))
+        screen.blit(pen_pic,(15,20))
+        screen.blit(eraser_pic,(10,110))
+        screen.blit(brush_pic,(20,180))
+        screen.blit(spray_pic,(20,255))
+        screen.blit(fill_pic,(15,325))
+        screen.blit(text_pic,(15,400))
+        screen.blit(dropper_pic,(20,470))
+        screen.blit(poly_pic,(85,470))
 
-        draw.line(screen,(0,0,0),(80,130),(110,170),2)
-        draw.rect(screen,(0,0,0),(85,205,35,45),2)
-        draw.ellipse(screen,(0,0,0),(80,285,50,40),2)
-        draw.rect(screen,(0,0,0),(85,355,35,45))
-        draw.ellipse(screen,(0,0,0),(80,435,50,40))
+        draw.line(screen,(0,0,0),(80,120),(110,160),2)
+        draw.rect(screen,(0,0,0),(85,190,35,45),2)
+        draw.ellipse(screen,(0,0,0),(80,265,50,40),2)
+        draw.rect(screen,(0,0,0),(85,335,35,45))
+        draw.ellipse(screen,(0,0,0),(80,400,50,40))
 
-        screen.blit(undo_pic,(1135,40))
-        screen.blit(redo_pic,(1135,115))
-        screen.blit(open_pic,(1135,195))
-        screen.blit(new_pic,(1130,265))
-        screen.blit(save_pic,(1135,345))
-        screen.blit(help_pic,(1130,420))
+        screen.blit(undo_pic,(1100,40))
+        screen.blit(redo_pic,(1100,115))
+        screen.blit(open_pic,(1100,170))
+        screen.blit(new_pic,(1090,245))
+        screen.blit(save_pic,(1100,325))
+        screen.blit(help_pic,(1090,390))
 
-        screen.blit(moth_pic,(405,635))
-        screen.blit(bear_pic,(405,715))
-        screen.blit(heisen_pic,(470,630))
-        screen.blit(rv_pic,(470,720))
-        screen.blit(pollos_pic,(530,630))
-        screen.blit(a1_pic,(535,715))
-        screen.blit(saul_pic,(600,635))
-        screen.blit(cook_pic,(600,715))
+        screen.blit(moth_pic,(390,590))
+        screen.blit(bear_pic,(390,660))
+        screen.blit(heisen_pic,(455,580))
+        screen.blit(rv_pic,(455,670))
+        screen.blit(pollos_pic,(510,580))
+        screen.blit(a1_pic,(510,660))
+        screen.blit(saul_pic,(570,585))
+        screen.blit(cook_pic,(570,660))
 
-        screen.blit(grayscale_pic,(665,635))
-        screen.blit(neg_pic,(670,715))
-        screen.blit(sepia_pic,(730,635))
-        screen.blit(red_pic,(730,715))
-        screen.blit(green_pic,(795,635))
-        screen.blit(blue_pic,(795,715))
+        screen.blit(grayscale_pic,(640,590))
+        screen.blit(neg_pic,(640,660))
+        screen.blit(sepia_pic,(700,590))
+        screen.blit(red_pic,(700,660))
+        screen.blit(green_pic,(770,590))
+        screen.blit(blue_pic,(770,660))
 
-        screen.blit(marker_pic,(855,630))
-        screen.blit(random_pic,(855,715))
+        screen.blit(marker_pic,(830,590))
+        screen.blit(random_pic,(830,665))
 
         #HOVERING ICONS <==== blit only when collidepoint((mx,my))
         if pen_b.collidepoint((mx,my)):
-            screen.blit(pen_hover,(15,30))
+            screen.blit(pen_hover,(15,20))
         if erase_b.collidepoint((mx,my)):
-            screen.blit(eraser_hover,(10,120))
+            screen.blit(eraser_hover,(10,110))
         if brush_b.collidepoint((mx,my)):
-            screen.blit(brush_hover,(20,200))
+            screen.blit(brush_hover,(20,180))
         if spray_b.collidepoint((mx,my)):
-            screen.blit(spray_hover,(20,280))
+            screen.blit(spray_hover,(20,255))
         if fill_b.collidepoint((mx,my)):
-            screen.blit(fill_hover,(15,355))
+            screen.blit(fill_hover,(15,325))
         if text_b.collidepoint((mx,my)):
-            screen.blit(text_hover,(15,435))
+            screen.blit(text_hover,(15,400))
         if dropper_b.collidepoint((mx,my)):
-            screen.blit(dropper_hover,(20,510))
+            screen.blit(dropper_hover,(20,470))
             
         if line_b.collidepoint((mx,my)):
-            draw.line(screen,(50,50,50),(80,130),(110,170),2)
+            draw.line(screen,(50,50,50),(80,120),(110,160),2)
         if rectangle_b.collidepoint((mx,my)):
-            draw.rect(screen,(50,50,50),(85,205,35,45),2)
+            draw.rect(screen,(50,50,50),(85,190,35,45),2)
         if ellipse_b.collidepoint((mx,my)):
-            draw.ellipse(screen,(50,50,50),(80,285,50,40),2)
+            draw.ellipse(screen,(50,50,50),(80,265,50,40),2)
         if fillRect_b.collidepoint((mx,my)):
-            draw.rect(screen,(50,50,50),(85,355,35,45))
+            draw.rect(screen,(50,50,50),(85,335,35,45))
         if fillElip_b.collidepoint((mx,my)):
-            draw.ellipse(screen,(50,50,50),(80,435,50,40))
+            draw.ellipse(screen,(50,50,50),(80,400,50,40))
         if poly_b.collidepoint((mx,my)):
-            screen.blit(poly_hover,(85,510))
+            screen.blit(poly_hover,(85,470))
 
         if undo_b.collidepoint((mx,my)):
-            screen.blit(undo_hover,(1135,40))
+            screen.blit(undo_hover,(1100,40))
         if redo_b.collidepoint((mx,my)):
-            screen.blit(redo_hover,(1135,115))
+            screen.blit(redo_hover,(1100,115))
         if open_b.collidepoint((mx,my)):
-            screen.blit(open_hover,(1135,195))
+            screen.blit(open_hover,(1100,170))
         if new_b.collidepoint((mx,my)):
-            screen.blit(new_hover,(1130,265))
+            screen.blit(new_hover,(1090,245))
         if save_b.collidepoint((mx,my)):
-            screen.blit(save_hover,(1135,345))
+            screen.blit(save_hover,(1100,325))
         if help_b.collidepoint((mx,my)):
-            screen.blit(help_hover,(1130,420))
+            screen.blit(help_hover,(1090,390))
 
         if moth_b.collidepoint((mx,my)):
-            screen.blit(moth_hover,(405,635))
+            screen.blit(moth_hover,(390,590))
         if bear_b.collidepoint((mx,my)):
-            screen.blit(bear_hover,(405,715))
+            screen.blit(bear_hover,(390,660))
         if heisen_b.collidepoint((mx,my)):
-            screen.blit(heisen_hover,(470,630))
+            screen.blit(heisen_hover,(455,580))
         if rv_b.collidepoint((mx,my)):
-            screen.blit(rv_hover,(470,720))
+            screen.blit(rv_hover,(455,670))
         if pollos_b.collidepoint((mx,my)):
-            screen.blit(pollos_hover,(530,630))
+            screen.blit(pollos_hover,(510,580))
         if a1_b.collidepoint((mx,my)):
-            screen.blit(a1_hover,(535,715))
+            screen.blit(a1_hover,(510,660))
         if saul_b.collidepoint((mx,my)):
-            screen.blit(saul_hover,(600,635))
+            screen.blit(saul_hover,(570,585))
         if cook_b.collidepoint((mx,my)):
-            screen.blit(cook_hover,(600,715))
+            screen.blit(cook_hover,(570,660))
+
         if grayscale_b.collidepoint((mx,my)):
-            screen.blit(norm_pic,(665,635))
-            
+            screen.blit(norm_pic,(640,590))    
         if neg_b.collidepoint((mx,my)):
-            screen.blit(norm_pic,(670,715))
+            screen.blit(norm_pic,(640,660))
         if sepia_b.collidepoint((mx,my)):
-            screen.blit(norm_pic,(730,635))
+            screen.blit(norm_pic,(700,590))
         if red_b.collidepoint((mx,my)):
-            screen.blit(norm_pic,(730,715))
+            screen.blit(norm_pic,(700,660))
         if green_b.collidepoint((mx,my)):
-            screen.blit(norm_pic,(795,635))
+            screen.blit(norm_pic,(770,590))
         if blue_b.collidepoint((mx,my)):
-            screen.blit(norm_pic,(795,715))
-            
+            screen.blit(norm_pic,(770,660))
+        
         if marker_b.collidepoint((mx,my)):
-            screen.blit(marker_hover,(855,630))
+            screen.blit(marker_hover,(830,590))
         if random_b.collidepoint((mx,my)):
-            screen.blit(random_hover,(855,715))
+            screen.blit(random_hover,(830,665))
         if colour_rect.collidepoint((mx,my)):   #updates colour immediately
             showcol = screen.get_at((mx,my))
-        
         
     if click:
         #SELECT CANVASES
@@ -573,7 +578,7 @@ while running:
             if canvas_bList[i].collidepoint(mx,my):
                 cvs[currentCvs] = screen.subsurface(canvas_rect).copy()
                 screen.set_clip(canvas_rect)
-                screen.blit(cvs[i],(145,70))
+                screen.blit(cvs[i],(145,60))
                 currentCvs = i
                 break
         #SELECT COLOUR
@@ -683,11 +688,11 @@ while running:
         if undo_b.collidepoint((mx,my)) and len(past[currentCvs])>=2:
             future[currentCvs].append(past[currentCvs][-1])
             del past[currentCvs][-1]
-            screen.blit(past[currentCvs][-1],(145,70))
+            screen.blit(past[currentCvs][-1],(145,60))
             if len(list_poly)>1:
                 del list_poly[-1]
         if redo_b.collidepoint((mx,my)) and len(future[currentCvs])>=1:
-            screen.blit(future[currentCvs][-1],(145,70))
+            screen.blit(future[currentCvs][-1],(145,60))
             past[currentCvs].append(future[currentCvs][-1])
             del future[currentCvs][-1]
         if new_b.collidepoint((mx,my)):
@@ -703,13 +708,13 @@ while running:
         infoTxt = times.render("Paint project by Annie Zhang.2014.", True, (255,255,255))
         infoTxt1 = times.render("Based off of AMC's Breaking Bad.", True, (255,255,255))
         infoTxt2 = times.render("Vince Gilligan is the one who knocks.", True, (255,255,255))
-        infoTxt3 = times.render("For more info please visit savewalterwhite.com",True,(255,255,255))
+        infoTxt3 = times.render("savewalterwhite.com",True,(255,255,255))
         draw.rect(screen,(0,0,0),(0,0,1200,800))        #cover up paint in back
         screen.blit(help_paintPic,(0,0))
-        screen.blit(infoTxt,(100,680))
-        screen.blit(infoTxt1,(100,710))
-        screen.blit(infoTxt2,(100,740))
-        screen.blit(infoTxt3,(700,740))
+        screen.blit(infoTxt,(900,100))
+        screen.blit(infoTxt1,(900,150))
+        screen.blit(infoTxt2,(900,200))
+        screen.blit(infoTxt3,(900,250))
         exitBox = Rect(1100,0,100,50)
         draw.rect(screen,(255,0,0),exitBox)
         draw.line(screen,(0,0,0),(1100,0),(1200,50))
