@@ -16,6 +16,4 @@ Tools include:
   
   -filters
 
-Picture:
-
 ![alt text](https://github.com/zhangium/Painting-Pad/blob/master/help_paintPic.png)
